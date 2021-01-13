@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="indi.fanyun.bullscheduling.mapper.TaskExeRecordMapper">
+  <resultMap id="BaseResultMap" type="indi.fanyun.bullscheduling.model.dbo.TaskExeRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="TASK_CODE" jdbcType="VARCHAR" property="taskCode" />
+    <result column="GMT_START" jdbcType="TIMESTAMP" property="gmtStart" />
+    <result column="GMT_END" jdbcType="TIMESTAMP" property="gmtEnd" />
+    <result column="RESULTS" jdbcType="VARCHAR" property="results" />
+    <result column="RESULT_BODY" jdbcType="VARCHAR" property="resultBody" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+  </resultMap>
+</mapper>
