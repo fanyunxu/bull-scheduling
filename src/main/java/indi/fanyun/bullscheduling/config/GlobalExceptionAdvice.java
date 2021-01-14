@@ -5,6 +5,7 @@ import indi.fanyun.bullscheduling.common.MyBizException;
 import indi.fanyun.bullscheduling.common.types.ErrorTypes;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,7 @@ public class GlobalExceptionAdvice {
      * @param ex
      */
     @ExceptionHandler(value = Exception.class)
+    @ResponseBody
     public BaseResponseDTO handleHttpException(HttpServletRequest req, Exception ex){
         BaseResponseDTO baseResponseDTO=new BaseResponseDTO();
         baseResponseDTO.fail(ErrorTypes.SYSTEM_ERROR);
@@ -34,6 +36,7 @@ public class GlobalExceptionAdvice {
      * @param ex
      */
     @ExceptionHandler(value = MyBizException.class)
+    @ResponseBody
     public BaseResponseDTO handleHttpException(HttpServletRequest req, MyBizException ex){
         BaseResponseDTO baseResponseDTO=new BaseResponseDTO();
         baseResponseDTO.fail(ErrorTypes.BIZ_ERROR,ex.getMessage());

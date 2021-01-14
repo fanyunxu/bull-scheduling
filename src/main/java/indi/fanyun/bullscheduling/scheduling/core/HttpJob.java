@@ -42,8 +42,14 @@ public class HttpJob implements Job {
         exeRecordInfo.setGmtStart(new Date(start));
         exeRecordInfo.setGmtEnd(new Date());
         exeRecordInfo.setTaskCode(jobInfo.getCode());
-        exeRecordInfo.setResultBody(body);
+        exeRecordInfo.setResultBody(getBody(body));
         exeRecordInfo.setResults(response.getStatus()==200? ResultsStatus.USING.name():ResultsStatus.ABNORMAL.name());
         TaskUtil.addTaskExeRecord(exeRecordInfo);
+    }
+    private String getBody(String data){
+        if(data==null){
+            return data;
+        }
+        return data.length()>512?data.substring(0,512):data;
     }
 }
