@@ -1,7 +1,6 @@
 package indi.fanyun.bullscheduling.model.info;
 
 import cn.hutool.http.Method;
-import indi.fanyun.bullscheduling.common.types.NormalStatus;
 import indi.fanyun.bullscheduling.common.types.ParamType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Enums;
 
 import java.io.IOException;
@@ -12,6 +14,8 @@ import java.io.IOException;
  * @author tshk
  * @date 2021-01-12 15:26
  */
+@JsonDeserialize(using = ErrorTypes.Deserializer.class )
+@JsonSerialize(using = ErrorTypes.Serializer.class )
 public enum ErrorTypes {
 
 
@@ -54,6 +58,8 @@ public enum ErrorTypes {
                 jgen.writeObject( value.name() );
                 jgen.writeFieldName( "errorMsg" );
                 jgen.writeString( value.errorMsg );
+                jgen.writeFieldName( "errorCode" );
+                jgen.writeNumber( value.errorCode );
                 jgen.writeEndObject();
             } else {
                 jgen.writeNull();

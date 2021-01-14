@@ -1,12 +1,12 @@
 package indi.fanyun.bullscheduling.web;
 
-import indi.fanyun.bullscheduling.common.BaseRequestDTO;
-import indi.fanyun.bullscheduling.common.BaseResponseDTO;
+import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
-import indi.fanyun.bullscheduling.model.info.JobInfo;
+import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
+import indi.fanyun.bullscheduling.facade.response.TaskListResponseDTO;
 import indi.fanyun.bullscheduling.service.TaskService;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,6 +30,13 @@ public class TaskController {
         return taskService.edit(requestDTO);
     }
 
+    @PostMapping("/list")
+    @ApiOperation("查询任务列表")
+    @ResponseBody
+    public TaskListResponseDTO queryTaskList(@RequestBody TaskQueryRequestDTO requestDTO){
+        return taskService.queryTaskList(requestDTO);
+    }
+
     @GetMapping("/test")
     @ApiOperation("编辑任务")
     public BaseResponseDTO get(){
@@ -37,10 +44,10 @@ public class TaskController {
         return new BaseResponseDTO();
     }
 
-    @PostMapping("/test")
-    @ApiOperation("编辑任务")
-    public BaseResponseDTO post(@RequestBody JobInfo jobInfo){
-        System.out.println("post===="+jobInfo.getTaskName());
-        return new BaseResponseDTO();
-    }
+//    @PostMapping("/test")
+//    @ApiOperation("编辑任务")
+//    public BaseResponseDTO post(@RequestBody JobInfo jobInfo){
+//        System.out.println("post===="+jobInfo.getTaskName());
+//        return new BaseResponseDTO();
+//    }
 }

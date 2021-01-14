@@ -19,4 +19,33 @@
     <result column="GMT_MODIFY" jdbcType="TIMESTAMP" property="gmtModify" />
     <result column="STATUS" jdbcType="VARCHAR" property="status" />
   </resultMap>
+
+   <sql id="BASE_COLUMN">
+     ta.`CODE`,
+    ta.TASK_NAME,
+    ta.TARGET_URL,
+    ta.METHOD,
+    ta.CRON,
+    ta.PARAM,
+    ta.PARAM_TYPE,
+    ta.OPERATE_CODE,
+    ta.OPERATE_NAME,
+    ta.GMT_CREATE,
+    ta.GMT_MODIFY,
+    ta.`STATUS`
+   </sql>
+    <select id="selectByParam"  resultMap="BaseResultMap">
+            select <include refid="BASE_COLUMN"/> from t_task ta
+            <where>
+              <if test=" code != null and code !=''">
+                and ta.CODE = #{code}
+              </if>
+              <if test=" taskName != null and taskName !=''">
+                and ta.TASK_NAME like concat('%',#{code},'%')
+              </if>
+              <if test=" taskStatus != null and taskStatus !=''">
+                and ta.STATUS = #{taskStatus}
+              </if>
+            </where>
+    </select>
 </mapper>

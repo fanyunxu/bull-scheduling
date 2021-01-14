@@ -1,7 +1,7 @@
 package indi.fanyun.bullscheduling.facade.request;
 
 import cn.hutool.http.Method;
-import indi.fanyun.bullscheduling.common.BaseRequestDTO;
+import indi.fanyun.bullscheduling.common.dto.BaseRequestDTO;
 import indi.fanyun.bullscheduling.common.types.NormalStatus;
 import indi.fanyun.bullscheduling.common.types.ParamType;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,6 +1,6 @@
 package indi.fanyun.bullscheduling.config;
 
-import indi.fanyun.bullscheduling.common.BaseResponseDTO;
+import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.MyBizException;
 import indi.fanyun.bullscheduling.common.types.ErrorTypes;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,8 +1,9 @@
 package indi.fanyun.bullscheduling.service;
 
-import indi.fanyun.bullscheduling.common.BaseResponseDTO;
+import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
-import org.quartz.SchedulerException;
+import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
+import indi.fanyun.bullscheduling.facade.response.TaskListResponseDTO;
 
 /**
  * @author tshk
@@ -15,4 +16,11 @@ public interface TaskService {
      * @return
      */
     BaseResponseDTO edit(TaskEditRequestDTO requestDTO) ;
+
+    /**
+     * 查询任务列表
+     * @param requestDTO
+     * @return
+     */
+    TaskListResponseDTO queryTaskList(TaskQueryRequestDTO requestDTO);
 }

@@ -19,7 +19,7 @@ import java.io.IOException;
 public enum ParamType {
 
     JSON("JSON"),
-    NORMAL("普通");
+    FORM("FORM");
 
     ParamType(String displayName) {
         this.displayName=displayName;

@@ -1,4 +1,4 @@
-package indi.fanyun.bullscheduling.common;
+package indi.fanyun.bullscheduling.common.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
