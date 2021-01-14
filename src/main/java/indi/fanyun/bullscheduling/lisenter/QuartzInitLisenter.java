@@ -2,9 +2,8 @@ package indi.fanyun.bullscheduling.lisenter;
 
 import indi.fanyun.bullscheduling.scheduling.core.SchedulerAllJob;
 import org.quartz.SchedulerException;
-import org.springframework.context.ApplicationEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,18 +13,17 @@ import javax.annotation.Resource;
  * @date 2021-01-13 10:03
  */
 @Component
-public class QuartzInitLisenter implements ApplicationListener {
+public class QuartzInitLisenter implements ApplicationListener<ApplicationReadyEvent> {
 
     @Resource
     private SchedulerAllJob schedulerAllJob;
 
-
     @Override
-    public void onApplicationEvent(ApplicationEvent event) {
-        try {
-            schedulerAllJob.scheduleJobs();
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+            try {
+                schedulerAllJob.scheduleJobs();
+            } catch (SchedulerException e) {
+                e.printStackTrace();
+            }
     }
 }
