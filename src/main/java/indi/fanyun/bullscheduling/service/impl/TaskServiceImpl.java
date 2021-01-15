@@ -60,6 +60,10 @@ public class TaskServiceImpl implements TaskService {
             taskMapper.updateByPrimaryKeySelective(map);
         }
         JobInfo jobInfo = obj2ObjMapper.map(map, JobInfo.class);
+        if(NormalStatus.DISABLE.name().equals(map.getStatus())){
+            schedulerAllJob.remove(jobInfo);
+            return baseResponseDTO;
+        }
         schedulerAllJob.remove(jobInfo);
         schedulerAllJob.add(jobInfo);
         return baseResponseDTO;
