@@ -1,12 +1,15 @@
 package indi.fanyun.bullscheduling.web;
 
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
+import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
+import indi.fanyun.bullscheduling.common.group.CodeGroup;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
 import indi.fanyun.bullscheduling.facade.response.TaskListResponseDTO;
 import indi.fanyun.bullscheduling.service.TaskService;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,12 +40,26 @@ public class TaskController {
         return taskService.queryTaskList(requestDTO);
     }
 
-    @GetMapping("/test")
-    @ApiOperation("编辑任务")
-    public BaseResponseDTO get(){
-        System.out.println("get====");
-        return new BaseResponseDTO();
+    @PostMapping("/delete")
+    @ApiOperation("删除任务")
+    @ResponseBody
+    public BaseResponseDTO deleteTask(@RequestBody @Validated(value = {CodeGroup.class}) CodeRequestDTO requestDTO){
+        return taskService.deleteTask(requestDTO);
     }
+
+    @PostMapping("/control")
+    @ApiOperation("恢复或暂停任务")
+    @ResponseBody
+    public BaseResponseDTO controlTask(@RequestBody @Validated(value = {CodeGroup.class}) CodeRequestDTO requestDTO){
+        return taskService.controlTask(requestDTO);
+    }
+
+//    @GetMapping("/test")
+//    @ApiOperation("编辑任务")
+//    public BaseResponseDTO get(){
+//        System.out.println("get====");
+//        return new BaseResponseDTO();
+//    }
 
 //    @PostMapping("/test")
 //    @ApiOperation("编辑任务")

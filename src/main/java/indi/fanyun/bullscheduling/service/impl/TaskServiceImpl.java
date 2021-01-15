@@ -4,7 +4,10 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import indi.fanyun.bullscheduling.common.MyBizException;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
+import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
+import indi.fanyun.bullscheduling.common.types.NormalStatus;
 import indi.fanyun.bullscheduling.facade.info.TaskInfo;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
@@ -57,11 +60,8 @@ public class TaskServiceImpl implements TaskService {
             taskMapper.updateByPrimaryKeySelective(map);
         }
         JobInfo jobInfo = obj2ObjMapper.map(map, JobInfo.class);
-        try {
-            schedulerAllJob.add(jobInfo);
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
+        schedulerAllJob.remove(jobInfo);
+        schedulerAllJob.add(jobInfo);
         return baseResponseDTO;
     }
 
@@ -74,5 +74,39 @@ public class TaskServiceImpl implements TaskService {
         taskListResponseDTO.setTaskInfos(obj2ObjMapper.mapAsList(page.getResult(), TaskInfo.class));
         taskListResponseDTO.setTotal(page.getTotal());
         return taskListResponseDTO;
+    }
+
+    @Override
+    public BaseResponseDTO deleteTask(CodeRequestDTO requestDTO) {
+        TaskBo taskBo = taskMapper.selectByPrimaryKey(requestDTO.getCode());
+        if(taskBo==null){
+            throw new MyBizException("任务不存在");
+        }
+        JobInfo jobInfo = obj2ObjMapper.map(taskBo, JobInfo.class);
+        taskMapper.updateByPrimaryKeySelective(TaskBo.builder().code(requestDTO.getCode()).status(NormalStatus.DELETE.name()).build());
+        schedulerAllJob.remove(jobInfo);
+        return new BaseResponseDTO();
+    }
+
+    @Override
+    public BaseResponseDTO controlTask(CodeRequestDTO requestDTO) {
+        TaskBo taskBo = taskMapper.selectByPrimaryKey(requestDTO.getCode());
+        if(taskBo==null){
+            throw new MyBizException("任务不存在");
+        }
+        JobInfo jobInfo = obj2ObjMapper.map(taskBo, JobInfo.class);
+        if(NormalStatus.DELETE.name().equals( taskBo.getStatus())){
+            throw new MyBizException("任务状态为删除不可操作");
+        }
+        String status="";
+        if(NormalStatus.USING.name().equals(taskBo.getStatus())){
+            status=NormalStatus.DISABLE.name();
+            schedulerAllJob.remove(jobInfo);
+        }else{
+            status=NormalStatus.USING.name();
+            schedulerAllJob.add(jobInfo);
+        }
+        taskMapper.updateByPrimaryKeySelective(TaskBo.builder().code(requestDTO.getCode()).status(status).build());
+        return new BaseResponseDTO();
     }
 }

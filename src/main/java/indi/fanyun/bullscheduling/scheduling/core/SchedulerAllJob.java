@@ -5,6 +5,7 @@ import indi.fanyun.bullscheduling.common.types.NormalStatus;
 import indi.fanyun.bullscheduling.mapper.TaskMapper;
 import indi.fanyun.bullscheduling.model.dbo.TaskBo;
 import indi.fanyun.bullscheduling.model.info.JobInfo;
+import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.quartz.*;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -18,6 +19,7 @@ import java.util.List;
  * @date 2021-01-13 10:04
  */
 @Component
+@Slf4j
 public class SchedulerAllJob {
 
     @Resource
@@ -30,30 +32,42 @@ public class SchedulerAllJob {
      * 该方法用来启动所有的定时任务
      * @throws SchedulerException
      */
-    public void scheduleJobs() throws SchedulerException {
+    public void scheduleJobs() {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         scheduleJob1(scheduler);
     }
 
-    public void stop() throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        scheduler.clear();
+    public void stop()  {
+        try {
+            Scheduler scheduler = schedulerFactoryBean.getScheduler();
+            scheduler.clear();
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void remove(JobInfo jobInfo) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        boolean deleteJob = scheduler.deleteJob(new JobKey(jobInfo.getCode(), HttpJob.JOB_GROUP));
-        System.out.println(deleteJob);
+    public void remove(JobInfo jobInfo)  {
+        try {
+            Scheduler scheduler = schedulerFactoryBean.getScheduler();
+            boolean deleteJob = scheduler.deleteJob(new JobKey(jobInfo.getCode(), HttpJob.JOB_GROUP));
+            log.info("删除任务成功:{}",jobInfo.getTaskName());
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void add(JobInfo jobInfo) throws SchedulerException {
+    public void add(JobInfo jobInfo)  {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobDetail jobDetail = JobBuilder.newJob(HttpJob.class) .withIdentity(jobInfo.getCode(), HttpJob.JOB_GROUP).build();
         // 每5s执行一次
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(jobInfo.getCron());
         CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(jobInfo.getCode(), HttpJob.JOB_GROUP) .withSchedule(scheduleBuilder).build();
         cronTrigger.getJobDataMap().put(HttpJob.JOB_KEY, JSON.toJSONString(jobInfo));
-        scheduler.scheduleJob(jobDetail,cronTrigger);
+        try {
+            scheduler.scheduleJob(jobDetail,cronTrigger);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -62,7 +76,7 @@ public class SchedulerAllJob {
      * @param scheduler
      * @throws SchedulerException
      */
-    private void scheduleJob1(Scheduler scheduler) throws SchedulerException{
+    private void scheduleJob1(Scheduler scheduler) {
         List<TaskBo> tasks = taskMapper.select(TaskBo.builder().status(NormalStatus.USING.name()).build());
         if(tasks != null && !tasks.isEmpty()){
             for (TaskBo task : tasks) {
@@ -72,8 +86,12 @@ public class SchedulerAllJob {
                 CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(task.getCron());
                 CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(task.getCode(), HttpJob.JOB_GROUP) .withSchedule(scheduleBuilder).build();
                 cronTrigger.getJobDataMap().put(HttpJob.JOB_KEY, JSON.toJSONString(jobInfo));
-                if (!scheduler.checkExists(jobKey)) {
-                    scheduler.scheduleJob(jobDetail,cronTrigger);
+                try {
+                    if (!scheduler.checkExists(jobKey)) {
+                        scheduler.scheduleJob(jobDetail,cronTrigger);
+                    }
+                } catch (SchedulerException e) {
+                    e.printStackTrace();
                 }
             }
         }

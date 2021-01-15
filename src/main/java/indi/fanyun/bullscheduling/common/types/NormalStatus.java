@@ -23,6 +23,7 @@ import java.io.IOException;
 public enum NormalStatus {
 
     USING("正常"),
+    DELETE("删除"),
     DISABLE("禁用");
 
     NormalStatus(String displayName) {
