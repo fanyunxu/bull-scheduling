@@ -59,3 +59,4 @@ hs_err_pid*
 
 # other more
 .idea/
+/mvnw
