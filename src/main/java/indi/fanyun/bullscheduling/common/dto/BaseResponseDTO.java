@@ -2,7 +2,6 @@ package indi.fanyun.bullscheduling.common.dto;
 
 import indi.fanyun.bullscheduling.common.types.ErrorTypes;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

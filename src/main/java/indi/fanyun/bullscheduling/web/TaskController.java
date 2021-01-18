@@ -1,5 +1,6 @@
 package indi.fanyun.bullscheduling.web;
 
+import indi.fanyun.bullscheduling.common.annotation.OperatorAuthentication;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
 import indi.fanyun.bullscheduling.common.group.CodeGroup;
@@ -29,6 +30,7 @@ public class TaskController {
     @PostMapping("/edit")
     @ApiOperation("编辑任务")
     @ResponseBody
+    @OperatorAuthentication
     public BaseResponseDTO edit(@RequestBody @Valid TaskEditRequestDTO requestDTO){
         return taskService.edit(requestDTO);
     }
@@ -36,6 +38,7 @@ public class TaskController {
     @PostMapping("/list")
     @ApiOperation("查询任务列表")
     @ResponseBody
+    @OperatorAuthentication
     public TaskListResponseDTO queryTaskList(@RequestBody TaskQueryRequestDTO requestDTO){
         return taskService.queryTaskList(requestDTO);
     }

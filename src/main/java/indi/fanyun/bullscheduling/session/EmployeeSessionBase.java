@@ -27,4 +27,8 @@ public interface EmployeeSessionBase {
      * 删除所有session
      */
     boolean removeAll();
+    /**
+     * 获取登录信息
+     */
+    EmployeeInfo get(String key);
 }

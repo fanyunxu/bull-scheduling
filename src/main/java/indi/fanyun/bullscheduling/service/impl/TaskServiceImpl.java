@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import indi.fanyun.bullscheduling.common.MyBizException;
+import indi.fanyun.bullscheduling.common.exceptions.MyBizException;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
 import indi.fanyun.bullscheduling.common.types.NormalStatus;
@@ -19,14 +19,11 @@ import indi.fanyun.bullscheduling.model.info.TaskInfoDTO;
 import indi.fanyun.bullscheduling.scheduling.core.SchedulerAllJob;
 import indi.fanyun.bullscheduling.service.TaskService;
 import ma.glasnost.orika.MapperFacade;
-import org.quartz.SchedulerException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author tshk

@@ -20,10 +20,6 @@ public class QuartzInitLisenter implements ApplicationListener<ApplicationReadyE
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-            try {
-                schedulerAllJob.scheduleJobs();
-            } catch (SchedulerException e) {
-                e.printStackTrace();
-            }
+        schedulerAllJob.scheduleJobs();
     }
 }

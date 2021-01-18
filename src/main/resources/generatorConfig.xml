@@ -18,8 +18,7 @@
         <sqlMapGenerator targetPackage="mybatis" targetProject="src/main/resources"/>
         <javaClientGenerator targetPackage="indi.fanyun.bullscheduling.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
-        <table tableName="t_task" domainObjectName="Task"/>
-        <table tableName="t_task_exe_record" domainObjectName="TaskExeRecord"/>
+        <table tableName="b_employee" domainObjectName="Employee"/>
 
     </context>
 </generatorConfiguration>

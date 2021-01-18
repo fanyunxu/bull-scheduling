@@ -1,11 +1,10 @@
 package indi.fanyun.bullscheduling.session;
 
 import cn.hutool.cache.impl.TimedCache;
-import indi.fanyun.bullscheduling.common.MyBizException;
+import indi.fanyun.bullscheduling.common.exceptions.MyBizException;
 import indi.fanyun.bullscheduling.facade.info.EmployeeInfo;
 
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author tshk
@@ -50,5 +49,10 @@ public class EmployeeLocalSession implements EmployeeSessionBase {
     public boolean removeAll() {
         timedCache=new TimedCache<>(timeout);
         return true;
+    }
+
+    @Override
+    public EmployeeInfo get(String key) {
+        return timedCache.get(key);
     }
 }

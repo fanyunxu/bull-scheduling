@@ -1,8 +1,9 @@
 package indi.fanyun.bullscheduling.config;
 
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
-import indi.fanyun.bullscheduling.common.MyBizException;
+import indi.fanyun.bullscheduling.common.exceptions.MyBizException;
 import indi.fanyun.bullscheduling.common.types.ErrorTypes;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2021-01-12 15:37
  */
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionAdvice {
 
     /**
@@ -26,6 +28,7 @@ public class GlobalExceptionAdvice {
     public BaseResponseDTO handleHttpException(HttpServletRequest req, Exception ex){
         BaseResponseDTO baseResponseDTO=new BaseResponseDTO();
         baseResponseDTO.fail(ErrorTypes.SYSTEM_ERROR);
+        log.error(req.getRequestURI());
         ex.printStackTrace();
         return baseResponseDTO;
     }

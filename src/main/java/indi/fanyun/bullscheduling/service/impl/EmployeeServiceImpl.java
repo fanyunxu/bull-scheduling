@@ -3,7 +3,7 @@ package indi.fanyun.bullscheduling.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.SecureUtil;
-import indi.fanyun.bullscheduling.common.MyBizException;
+import indi.fanyun.bullscheduling.common.exceptions.MyBizException;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
 import indi.fanyun.bullscheduling.common.types.NormalStatus;
@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new MyBizException("当前用户状态异常");
         }
         EmployeeInfo map = mapperFacade.map(employee, EmployeeInfo.class);
-        String fastUUID = IdUtil.fastUUID();
+        String fastUUID = IdUtil.fastSimpleUUID();
         EmployeeLoginResponseDTO responseDTO=new EmployeeLoginResponseDTO();
         responseDTO.setEmployeeInfo(map);
         responseDTO.setToken(fastUUID);
