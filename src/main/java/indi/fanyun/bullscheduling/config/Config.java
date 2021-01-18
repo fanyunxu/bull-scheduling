@@ -1,5 +1,6 @@
 package indi.fanyun.bullscheduling.config;
 
+import indi.fanyun.bullscheduling.session.EmployeeLocalSession;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
@@ -17,5 +18,10 @@ public class Config {
     public MapperFacade MapperFacade(){
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
         return mapperFactory.getMapperFacade();
+    }
+
+    @Bean
+    public EmployeeLocalSession employeeLocalSession(){
+        return new EmployeeLocalSession(1000*60*60*2);
     }
 }
