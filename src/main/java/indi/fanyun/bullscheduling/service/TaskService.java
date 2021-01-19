@@ -3,7 +3,9 @@ package indi.fanyun.bullscheduling.service;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
+import indi.fanyun.bullscheduling.facade.request.TaskExeRecordRequestDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
+import indi.fanyun.bullscheduling.facade.response.TaskExeRecordResponseDTO;
 import indi.fanyun.bullscheduling.facade.response.TaskListResponseDTO;
 
 /**
@@ -38,4 +40,11 @@ public interface TaskService {
      * @return
      */
     BaseResponseDTO controlTask(CodeRequestDTO requestDTO);
+
+    /**
+     * 获取任务执行记录
+     * @param recordRequestDTO
+     * @return
+     */
+    TaskExeRecordResponseDTO getTaskExeRecords(TaskExeRecordRequestDTO recordRequestDTO);
 }

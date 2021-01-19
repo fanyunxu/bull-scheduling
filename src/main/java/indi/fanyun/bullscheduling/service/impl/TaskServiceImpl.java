@@ -8,12 +8,18 @@ import indi.fanyun.bullscheduling.common.exceptions.MyBizException;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
 import indi.fanyun.bullscheduling.common.types.NormalStatus;
+import indi.fanyun.bullscheduling.facade.info.TaskExeRecordInfo;
 import indi.fanyun.bullscheduling.facade.info.TaskInfo;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
+import indi.fanyun.bullscheduling.facade.request.TaskExeRecordRequestDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
+import indi.fanyun.bullscheduling.facade.response.TaskExeRecordResponseDTO;
 import indi.fanyun.bullscheduling.facade.response.TaskListResponseDTO;
+import indi.fanyun.bullscheduling.mapper.TaskExeRecordMapper;
 import indi.fanyun.bullscheduling.mapper.TaskMapper;
 import indi.fanyun.bullscheduling.model.dbo.TaskBo;
+import indi.fanyun.bullscheduling.model.dbo.TaskExeRecord;
+import indi.fanyun.bullscheduling.model.dto.TaskExeRecordDTO;
 import indi.fanyun.bullscheduling.model.info.JobInfo;
 import indi.fanyun.bullscheduling.model.info.TaskInfoDTO;
 import indi.fanyun.bullscheduling.scheduling.core.SchedulerAllJob;
@@ -35,6 +41,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Resource
     private TaskMapper taskMapper;
+    @Resource
+    private TaskExeRecordMapper taskExeRecordMapper;
 
     @Resource
     private MapperFacade obj2ObjMapper;
@@ -109,5 +117,16 @@ public class TaskServiceImpl implements TaskService {
         }
         taskMapper.updateByPrimaryKeySelective(TaskBo.builder().code(requestDTO.getCode()).status(status).build());
         return new BaseResponseDTO();
+    }
+
+    @Override
+    public TaskExeRecordResponseDTO getTaskExeRecords(TaskExeRecordRequestDTO recordRequestDTO) {
+        TaskExeRecordDTO recordDTO = obj2ObjMapper.map(recordRequestDTO, TaskExeRecordDTO.class);
+        Page<TaskExeRecord> taskExeRecords = PageHelper.startPage(recordRequestDTO.getPage(), recordRequestDTO.getSize());
+        taskExeRecordMapper.selectTaskExeRecords(recordDTO);
+        TaskExeRecordResponseDTO taskExeRecordResponseDTO=new TaskExeRecordResponseDTO();
+        taskExeRecordResponseDTO.setRecordInfos(obj2ObjMapper.mapAsList(taskExeRecords.getResult(), TaskExeRecordInfo.class));
+        taskExeRecordResponseDTO.setTotal(taskExeRecords.getTotal());
+        return taskExeRecordResponseDTO;
     }
 }

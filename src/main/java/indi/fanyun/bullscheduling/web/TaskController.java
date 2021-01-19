@@ -4,8 +4,11 @@ import indi.fanyun.bullscheduling.common.annotation.OperatorAuthentication;
 import indi.fanyun.bullscheduling.common.dto.BaseResponseDTO;
 import indi.fanyun.bullscheduling.common.dto.CodeRequestDTO;
 import indi.fanyun.bullscheduling.common.group.CodeGroup;
+import indi.fanyun.bullscheduling.common.group.OperateGroup;
 import indi.fanyun.bullscheduling.facade.request.TaskEditRequestDTO;
+import indi.fanyun.bullscheduling.facade.request.TaskExeRecordRequestDTO;
 import indi.fanyun.bullscheduling.facade.request.TaskQueryRequestDTO;
+import indi.fanyun.bullscheduling.facade.response.TaskExeRecordResponseDTO;
 import indi.fanyun.bullscheduling.facade.response.TaskListResponseDTO;
 import indi.fanyun.bullscheduling.service.TaskService;
 import io.swagger.annotations.ApiModelProperty;
@@ -46,6 +49,7 @@ public class TaskController {
     @PostMapping("/delete")
     @ApiOperation("删除任务")
     @ResponseBody
+    @OperatorAuthentication
     public BaseResponseDTO deleteTask(@RequestBody @Validated(value = {CodeGroup.class}) CodeRequestDTO requestDTO){
         return taskService.deleteTask(requestDTO);
     }
@@ -53,21 +57,16 @@ public class TaskController {
     @PostMapping("/control")
     @ApiOperation("恢复或暂停任务")
     @ResponseBody
+    @OperatorAuthentication
     public BaseResponseDTO controlTask(@RequestBody @Validated(value = {CodeGroup.class}) CodeRequestDTO requestDTO){
         return taskService.controlTask(requestDTO);
     }
 
-//    @GetMapping("/test")
-//    @ApiOperation("编辑任务")
-//    public BaseResponseDTO get(){
-//        System.out.println("get====");
-//        return new BaseResponseDTO();
-//    }
-
-//    @PostMapping("/test")
-//    @ApiOperation("编辑任务")
-//    public BaseResponseDTO post(@RequestBody JobInfo jobInfo){
-//        System.out.println("post===="+jobInfo.getTaskName());
-//        return new BaseResponseDTO();
-//    }
+    @PostMapping("/taskExeRecord")
+    @ApiOperation("/查询任务执行记录")
+    @ResponseBody
+    @OperatorAuthentication
+    public TaskExeRecordResponseDTO getTaskExeRecords(@RequestBody @Validated(value = { OperateGroup.class})TaskExeRecordRequestDTO recordRequestDTO){
+        return taskService.getTaskExeRecords(recordRequestDTO);
+    }
 }

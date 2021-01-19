@@ -14,4 +14,34 @@
     <result column="RESULT_BODY" jdbcType="VARCHAR" property="resultBody" />
     <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
+    <sql id="BASE_COLUMN_SQL">
+              ter.ID,
+              ter.`CODE`,
+              ter.TASK_CODE,
+              ter.GMT_START,
+              ter.GMT_END,
+              ter.RESULTS,
+              ter.RESULT_BODY,
+              ter.GMT_CREATE
+    </sql>
+    <select id="selectTaskExeRecords" resultMap="BaseResultMap">
+      SELECT
+        ter.ID,
+        ter.`CODE`,
+              ter.TASK_CODE,
+              ter.GMT_START,
+              ter.GMT_END,
+              ter.RESULTS,
+              ter.RESULT_BODY,
+              ter.GMT_CREATE
+      from t_task_exe_record ter
+        <where>
+          <if test="taskCode != null and taskCode !=''">
+            and ter.TASK_CODE =#{taskCode}
+          </if>
+          <if test="code != null and code !=''">
+            and ter.CODE =#{code}
+          </if>
+        </where>
+    </select>
 </mapper>
