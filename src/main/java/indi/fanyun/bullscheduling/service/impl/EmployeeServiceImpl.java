@@ -57,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeLoginResponseDTO responseDTO=new EmployeeLoginResponseDTO();
         responseDTO.setEmployeeInfo(map);
         responseDTO.setToken(fastUUID);
-        employeeLocalSession.registerSession(map);
+        employeeLocalSession.registerSession(fastUUID,map);
         return responseDTO;
     }
 

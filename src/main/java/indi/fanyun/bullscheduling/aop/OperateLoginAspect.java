@@ -1,6 +1,7 @@
 package indi.fanyun.bullscheduling.aop;
 
 import cn.hutool.core.util.StrUtil;
+import indi.fanyun.bullscheduling.common.dto.BaseRequestDTO;
 import indi.fanyun.bullscheduling.common.exceptions.MyBizException;
 import indi.fanyun.bullscheduling.common.exceptions.MyPermissionDeniedException;
 import indi.fanyun.bullscheduling.facade.info.EmployeeInfo;
@@ -51,6 +52,13 @@ public class OperateLoginAspect {
             throw new MyPermissionDeniedException("token已过期");
         }
         Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if(arg instanceof BaseRequestDTO){
+                BaseRequestDTO baseRequestDTO= (BaseRequestDTO) arg;
+                baseRequestDTO.setOperateId(employeeInfo.getAccount());
+                baseRequestDTO.setOperateName(employeeInfo.getName());
+            }
+        }
         res =  joinPoint.proceed();
         time = System.currentTimeMillis() - time;
         return res;

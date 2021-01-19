@@ -12,7 +12,7 @@ public interface EmployeeSessionBase {
      * 注册session
      * @return
      */
-    boolean registerSession(EmployeeInfo employeeInfo);
+    boolean registerSession(String token ,EmployeeInfo employeeInfo);
 
     /**
      * 刷新session

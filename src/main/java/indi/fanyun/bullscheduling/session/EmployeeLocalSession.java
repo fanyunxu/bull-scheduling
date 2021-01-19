@@ -25,11 +25,11 @@ public class EmployeeLocalSession implements EmployeeSessionBase {
     }
 
     @Override
-    public boolean registerSession(EmployeeInfo employeeInfo) {
+    public boolean registerSession(String token ,EmployeeInfo employeeInfo) {
         if(Objects.isNull(employeeInfo)){
             throw new MyBizException("注册session失败,登录信息不得为空");
         }
-        timedCache.put(employeeInfo.getCode(),employeeInfo);
+        timedCache.put(token,employeeInfo);
         return true;
     }
 
