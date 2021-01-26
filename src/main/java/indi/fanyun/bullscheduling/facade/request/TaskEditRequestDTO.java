@@ -38,5 +38,7 @@ public class TaskEditRequestDTO extends BaseRequestDTO {
     private ParamType paramType;
     @ApiModelProperty("状态")
     private NormalStatus status=NormalStatus.USING;
+    @ApiModelProperty("分组code")
+    private String groupCode;
 
 }

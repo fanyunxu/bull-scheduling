@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="indi.fanyun.bullscheduling.mapper.TaskGroupMapper">
+  <resultMap id="BaseResultMap" type="indi.fanyun.bullscheduling.model.dbo.TaskGroup">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="OPERATE_CODE" jdbcType="VARCHAR" property="operateCode" />
+    <result column="OPERATE_NAME" jdbcType="VARCHAR" property="operateName" />
+    <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="GMT_MODIFY" jdbcType="TIMESTAMP" property="gmtModify" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+</mapper>

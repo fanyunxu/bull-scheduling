@@ -18,6 +18,7 @@
     <result column="GMT_CREATE" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="GMT_MODIFY" jdbcType="TIMESTAMP" property="gmtModify" />
     <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="GROUP_CODE" jdbcType="VARCHAR" property="groupCode" />
   </resultMap>
 
    <sql id="BASE_COLUMN">
