@@ -21,6 +21,8 @@ public class BaseResponseDTO {
     private String errorMsg;
     @ApiModelProperty("错误类型")
     private ErrorTypes errorTypes;
+    @ApiModelProperty("状态码")
+    private Integer rstCode=0;
 
     public void fail(ErrorTypes errorTypes){
         this.success=false;
@@ -31,6 +33,7 @@ public class BaseResponseDTO {
         this.success=false;
         this.errorMsg=errorMsg;
         this.errorTypes=errorTypes;
+        this.rstCode=errorTypes.getErrorCode();
     }
     public void fail(String errorMsg){
         this.success=false;

@@ -20,7 +20,8 @@ public enum ErrorTypes {
 
 
     SYSTEM_ERROR("系统异常", 1),
-    BIZ_ERROR("业务异常", 2);
+    BIZ_ERROR("业务异常", 2),
+    PERMISSION_DENIED("token失效", 3);
 
     ErrorTypes(String errorMsg,Integer code) {
         this.errorMsg=errorMsg;

@@ -1,17 +1,21 @@
 package indi.fanyun.bullscheduling.model.dbo;
 
+import lombok.Builder;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "t_task_group")
+@Builder
 public class TaskGroup {
-    @Id
+
     @Column(name = "ID")
     private Integer id;
 
     /**
      * 主键
      */
+    @Id
     @Column(name = "CODE")
     private String code;
 
