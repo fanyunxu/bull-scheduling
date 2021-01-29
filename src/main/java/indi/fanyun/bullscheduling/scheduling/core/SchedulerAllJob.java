@@ -57,17 +57,18 @@ public class SchedulerAllJob {
     }
 
     public void add(JobInfo jobInfo)  {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
-        JobDetail jobDetail = JobBuilder.newJob(HttpJob.class) .withIdentity(jobInfo.getCode(), HttpJob.JOB_GROUP).build();
-        // 每5s执行一次
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(jobInfo.getCron());
-        CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(jobInfo.getCode(), HttpJob.JOB_GROUP) .withSchedule(scheduleBuilder).build();
-        cronTrigger.getJobDataMap().put(HttpJob.JOB_KEY, JSON.toJSONString(jobInfo));
         try {
+            Scheduler scheduler = schedulerFactoryBean.getScheduler();
+            JobDetail jobDetail = JobBuilder.newJob(HttpJob.class) .withIdentity(jobInfo.getCode(), HttpJob.JOB_GROUP).build();
+            // 每5s执行一次
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(jobInfo.getCron());
+            CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(jobInfo.getCode(), HttpJob.JOB_GROUP) .withSchedule(scheduleBuilder).build();
+            cronTrigger.getJobDataMap().put(HttpJob.JOB_KEY, JSON.toJSONString(jobInfo));
             scheduler.scheduleJob(jobDetail,cronTrigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
+
     }
 
     /**

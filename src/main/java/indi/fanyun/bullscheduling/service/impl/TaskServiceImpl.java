@@ -70,7 +70,11 @@ public class TaskServiceImpl implements TaskService {
             return baseResponseDTO;
         }
         schedulerAllJob.remove(jobInfo);
-        schedulerAllJob.add(jobInfo);
+        try {
+            schedulerAllJob.add(jobInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return baseResponseDTO;
     }
 
